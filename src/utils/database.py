@@ -44,3 +44,35 @@ class Database:
         if not data:
             return await self.create_guild(guild.id, guild.owner.id)
         return data
+
+    async def ensure_guild_config(self, guild: Guild):
+        await self.fetch_guild(guild)
+        data = await self.fetchrow("SELECT * FROM GuildConfigs WHERE id = $1;", guild.id)
+
+        if not data:
+            await self.execute("INSERT INTO GuildConfigs (id) VALUES ($1);", guild.id)
+
+    async def update_default_xp(self, guild: Guild, value: int):
+        await self.ensure_guild_config(guild)
+
+        await self.execute("UPDATE GuildConfigs SET default_xp = $1 WHERE id = $2;", value, guild.id)
+
+    async def update_algo(self, guild: Guild, value: int):
+        await self.ensure_guild_config(guild)
+
+        await self.execute("UPDATE GuildConfigs SET algo = $1 WHERE id = $2;", value, guild.id)
+
+    async def update_levelup_type(self, guild: Guild, value: int):
+        await self.ensure_guild_config(guild)
+
+        await self.execute("UPDATE GuildConfigs SET levelup_type = $1 WHERE id = $2;", value, guild.id)
+
+    async def update_levelup_msg(self, guild: Guild, value: str):
+        await self.ensure_guild_config(guild)
+
+        await self.execute("UPDATE GuildConfigs SET levelup_msg = $1 WHERE id = $2;", value, guild.id)
+
+    async def update_level_roles(self, guild: Guild, value: bool):
+        await self.ensure_guild_config(guild)
+
+        await self.execute("UPDATE GuildConfigs SET level_roles = $1 WHERE id = $2;", value, guild.id)
