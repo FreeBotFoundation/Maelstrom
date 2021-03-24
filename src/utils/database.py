@@ -39,7 +39,8 @@ class Database:
         await self.execute("INSERT INTO Guilds (id, owner_id) VALUES ($1, $2) RETURNING *;", id, owner_id)
 
     async def fetch_guild(self, guild: Guild):
-        guild = await self.fetchrow("SELECT * FROM Guilds WHERE id = $1;", guild.id)
+        data = await self.fetchrow("SELECT * FROM Guilds WHERE id = $1;", guild.id)
 
-        if not guild:
-            return await self.create_guild(guild.id, guild.owner_id)
+        if not data:
+            return await self.create_guild(guild.id, guild.owner.id, False)
+        return data
