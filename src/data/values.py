@@ -10,7 +10,7 @@ ALGOS_REVERSE = rd(ALGOS)
 LEVELUP_TYPES = {
     "react": 0,
     "chat": 1,
-    "dms": 2,
+    "dm": 2,
 }
 
 LEVELUP_TYPES_REVERSE = rd(LEVELUP_TYPES)
