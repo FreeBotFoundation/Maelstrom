@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS GuildOverrides (
     target_type     INT NOT NULL DEFAULT 0,
     target_id       BIGINT NOT NULL,
     created_at      TIMESTAMP NOT NULL DEFAULT NOW()
-)
+);
 
 CREATE TABLE IF NOT EXISTS LevelRoles (
     guild_id        BIGINT NOT NULL REFERENCES Guilds (id) ON DELETE CASCADE,
