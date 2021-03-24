@@ -15,14 +15,14 @@ class ConfigValidator:
 
     @staticmethod
     def validate_algorithm(algo: str) -> Result:
-        if algo := ALGOS.get(algo.lower()):
-            return Result(algo, True, None)
+        if algo in ALGOS:
+            return Result(ALGOS[algo], True, None)
         return Result(None, False, f"Value for algorithm must be one of: {', '.join(list(ALGOS.keys()))}")
 
     @staticmethod
     def validate_levelup_type(type: str) -> Result:
-        if type := LEVELUP_TYPES.get(type.lower()):
-            return Result(type, True, None)
+        if type in LEVELUP_TYPES:
+            return Result(LEVELUP_TYPES[type], True, None)
         return Result(None, False, f"Value for levelup type must be one of {', '.join(list(LEVELUP_TYPES.keys()))}")
 
     @staticmethod
