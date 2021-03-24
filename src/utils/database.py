@@ -50,7 +50,9 @@ class Database:
         data = await self.fetchrow("SELECT * FROM GuildConfigs WHERE id = $1;", guild.id)
 
         if not data:
-            await self.execute("INSERT INTO GuildConfigs (id) VALUES ($1);", guild.id)
+            data = await self.execute("INSERT INTO GuildConfigs (id) VALUES ($1) RETURNING *;", guild.id)
+
+        return data
 
     async def update_default_xp(self, guild: Guild, value: int):
         await self.ensure_guild_config(guild)
