@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS GuildConfigs (
     algo            INT NOT NULL DEFAULT 0,
     levelup_type    INT NOT NULL DEFAULT 0,
     levelup_msg     VARCHAR(1024) DEFAULT NULL,
-    level_roles     BOOLEAN NOT NULL,
+    level_roles     BOOLEAN NOT NULL DEFAULT FALSE,
     created_at      TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
