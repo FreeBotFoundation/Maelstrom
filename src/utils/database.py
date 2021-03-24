@@ -3,6 +3,8 @@ from os import getenv
 
 from loguru import logger
 
+from discord import Guild
+
 
 class Database:
     """A database interface for the bot to connect to Postgres."""
@@ -33,8 +35,11 @@ class Database:
         async with self.pool.acquire() as conn:
             return await conn.fetch(query, *args)
 
-    async def fetch_guild(self, id: int):
-        return await self.fetchrow("SELECT * FROM Guilds WHERE id = $1;", id)
-
     async def create_guild(self, id: int, owner_id: int) -> bool:
-        await self.execute("INSERT INTO Guilds (id, owner_id) VALUES ($1, $2);", id, owner_id)
+        await self.execute("INSERT INTO Guilds (id, owner_id) VALUES ($1, $2) RETURNING *;", id, owner_id)
+
+    async def fetch_guild(self, guild: Guild):
+        guild = await self.fetchrow("SELECT * FROM Guilds WHERE id = $1;", guild.id)
+
+        if not guild:
+            return await self.create_guild(guild.id, guild.owner_id)
