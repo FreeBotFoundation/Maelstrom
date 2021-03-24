@@ -14,3 +14,6 @@ LEVELUP_TYPES = {
 }
 
 LEVELUP_TYPES_REVERSE = rd(LEVELUP_TYPES)
+
+MESSAGE_DM = "You levelled up on {guild} to level {level}!"
+MESSAGE_CHAT = "You levelled up to level {level}!"
