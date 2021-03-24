@@ -36,7 +36,7 @@ class Database:
             return await conn.fetch(query, *args)
 
     async def create_guild(self, id: int, owner_id: int, banned: bool = False) -> bool:
-        return await self.execute("INSERT INTO Guilds (id, owner_id, banned) VALUES ($1, $2, $3) RETURNING *;", id, owner_id, banned)
+        return await self.fetchrow("INSERT INTO Guilds (id, owner_id, banned) VALUES ($1, $2, $3) RETURNING *;", id, owner_id, banned)
 
     async def fetch_guild(self, guild: Guild):
         data = await self.fetchrow("SELECT * FROM Guilds WHERE id = $1;", guild.id)
